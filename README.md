@@ -7,3 +7,11 @@ O PhotoBatch é uma aplicação de linha de comando para fazer operações em gr
 * Redimensionar imagens;
 * Escalar imagens.
 
+## **Como utilizar o PhotoBatch**
+
+### Inicializando
+
+### Modos de Operação
+
+### Próximos Objetivoss
+

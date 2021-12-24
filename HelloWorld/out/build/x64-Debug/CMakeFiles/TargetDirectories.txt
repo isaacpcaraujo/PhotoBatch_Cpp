@@ -1,0 +1,3 @@
+C:/Users/Isaac Araujo/Documents/GitHub/PhotoBatch_Cpp/HelloWorld/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Isaac Araujo/Documents/GitHub/PhotoBatch_Cpp/HelloWorld/out/build/x64-Debug/CMakeFiles/PhotoBatch.dir
+C:/Users/Isaac Araujo/Documents/GitHub/PhotoBatch_Cpp/HelloWorld/out/build/x64-Debug/CMakeFiles/edit_cache.dir
