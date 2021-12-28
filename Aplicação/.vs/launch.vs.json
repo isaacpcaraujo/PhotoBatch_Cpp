@@ -8,8 +8,7 @@
       "projectTarget": "PhotoBatch.exe",
       "name": "PhotoBatch.exe",
       "args": [
-        "Isaac",
-        "Araujo"
+        "--rename"
       ]
     }
   ]
