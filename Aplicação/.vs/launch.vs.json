@@ -8,7 +8,9 @@
       "projectTarget": "PhotoBatch.exe",
       "name": "PhotoBatch.exe",
       "args": [
-        "--rename"
+        "--Rename",
+        "--resizE",
+        "--scale"
       ]
     }
   ]

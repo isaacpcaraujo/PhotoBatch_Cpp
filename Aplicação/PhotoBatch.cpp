@@ -1,27 +1,7 @@
 #include <iostream>
 #include <iomanip>
 
-class ArgumentParser
-{
-public:
-	void RegisterFlag(const std::string& flag)
-	{
-
-	}
-
-	bool GetFlag(const std::string& flag)
-	{
-		return false;
-	}
-
-	void Parse(int argc, char* argv[])
-	{
-
-	}
-
-private:
-
-};
+#include "ArgumentParser.h"
 
 int main(int argc, char* argv[])
 {
