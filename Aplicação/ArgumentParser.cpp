@@ -11,6 +11,14 @@ void ArgumentParser::RegisterFlag(const std::string& flag)
 	}
 }
 
+void ArgumentParser::RegisterOption(const std::string& option)
+{
+	if (!option.empty())
+	{
+		m_Options[option] = "";
+	}
+}
+
 bool ArgumentParser::GetFlag(const std::string& flag)
 {
 	if (!flag.empty())
@@ -25,6 +33,36 @@ bool ArgumentParser::GetFlag(const std::string& flag)
 	}
 
 	return false;
+}
+
+const std::string& ArgumentParser::GetOption(const std::string& option) const
+{
+	if (!option.empty())
+	{
+		// O termo "auto" deduz o tipo de retorno do método "find".
+		auto optionIt = m_Options.find(option);
+		if (optionIt != std::end(m_Options))
+		{
+			// Retorna o valor associado ao mapa m_Flags.
+			return optionIt->second;
+		}
+	}
+
+	static std::string EmptyOption = "";
+
+	return EmptyOption;
+}
+
+float ArgumentParser::GetOptionAsFloat(const std::string& option) const
+{
+	const std::string& optionValue = GetOption(option);
+
+	if (!optionValue.empty())
+	{
+		return std::stof(optionValue);
+	}
+
+	return -1;
 }
 
 void ArgumentParser::Parse(int argc, char* argv[])
@@ -46,6 +84,20 @@ void ArgumentParser::Parse(int argc, char* argv[])
 					if (arg.find_first_of('=') != std::string::npos)
 					{
 						// Opções 
+						const size_t equalSignPos = arg.find('=');
+						if (equalSignPos != std::string::npos)
+						{
+							// Divide a opção em chave e valor
+							std::string optionName = arg.substr(0, equalSignPos);
+							std::string optionValue = arg.substr(equalSignPos + 1);
+
+							auto optionIt = m_Options.find(optionName);
+							if (optionIt != std::end(m_Options))
+							{
+								// Opção registrada.
+								optionIt->second = optionValue;
+							}
+						}
 					}
 
 					else

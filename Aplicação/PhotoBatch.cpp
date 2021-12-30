@@ -6,12 +6,15 @@
 int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "pt_BR");
+	setlocale(LC_NUMERIC, "en_US");
 
 	ArgumentParser argParser;
 	argParser.RegisterFlag("rename");
 	argParser.RegisterFlag("convert");
 	argParser.RegisterFlag("resize");
 	argParser.RegisterFlag("scale");
+	argParser.RegisterOption("folder");
+	argParser.RegisterOption("amount");
 
 	argParser.Parse(argc, argv);
 
@@ -19,6 +22,9 @@ int main(int argc, char* argv[])
 	std::cout << std::boolalpha << "Convert: " << argParser.GetFlag("convert") << std::endl;
 	std::cout << std::boolalpha << "Resize: " << argParser.GetFlag("resize") << std::endl;
 	std::cout << std::boolalpha << "Scale: " << argParser.GetFlag("scale") << std::endl;
+	std::cout << std::boolalpha << "Folder: " << argParser.GetOption("folder") << std::endl;
+	std::cout << std::boolalpha << "Amount: " << argParser.GetOption("amount") << std::endl;
+	std::cout << "Amount(Int): " << argParser.GetOptionAsFloat("amount") << std::endl;
 
 	return 0;
 }
