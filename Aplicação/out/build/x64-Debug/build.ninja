@@ -62,6 +62,20 @@ build CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj: CXX_COMPILER__PhotoBatch_Deb
   TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
   TARGET_PDB = PhotoBatch.pdb
 
+build CMakeFiles\PhotoBatch.dir\ArgumentParser.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\ArgumentParser.cpp || cmake_object_order_depends_target_PhotoBatch
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  OBJECT_DIR = CMakeFiles\PhotoBatch.dir
+  OBJECT_FILE_DIR = CMakeFiles\PhotoBatch.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
+  TARGET_PDB = PhotoBatch.pdb
+
+build CMakeFiles\PhotoBatch.dir\Utils.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\Utils.cpp || cmake_object_order_depends_target_PhotoBatch
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  OBJECT_DIR = CMakeFiles\PhotoBatch.dir
+  OBJECT_FILE_DIR = CMakeFiles\PhotoBatch.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
+  TARGET_PDB = PhotoBatch.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PhotoBatch
@@ -70,7 +84,7 @@ build CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj: CXX_COMPILER__PhotoBatch_Deb
 #############################################
 # Link the executable PhotoBatch.exe
 
-build PhotoBatch.exe: CXX_EXECUTABLE_LINKER__PhotoBatch_Debug CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj
+build PhotoBatch.exe: CXX_EXECUTABLE_LINKER__PhotoBatch_Debug CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj CMakeFiles\PhotoBatch.dir\ArgumentParser.cpp.obj CMakeFiles\PhotoBatch.dir\Utils.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
