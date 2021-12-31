@@ -23,11 +23,18 @@ public:
 	// Obtem o valor de uma flag obtida durante o parse.
 	bool GetFlag(const std::string& flag);
 
-	// Obtem o valor de uma opção obtida durante o parse.
-	const std::string& GetOption(const std::string& option) const;
-	
-	// Obtem o valor de uma opção convertida para float.
-	float GetOptionAsFloat(const std::string& option) const;
+	// Template para generalizar a conversão de uma opção
+	template<typename T>
+	T GetOptionAs(const std::string& option) const;
+
+	template<>
+	float GetOptionAs(const std::string& option) const { return GetOptionAsFloat(option); }
+
+	template<>
+	const std::string& GetOptionAs(const std::string& option) const { return GetOption(option); }
+
+	template<>
+	int GetOptionAs(const std::string& option) const { return GetOptionAsInt(option); }
 
 	// Faz o parse da lista de argumentos em argv.
 	void Parse(int argc, char* argv[]);
@@ -37,4 +44,13 @@ private:
 	// Declarando Dicionários para nossas Flags e Options.
 	std::map<std::string, bool> m_Flags;
 	std::map<std::string, std::string> m_Options;
+
+	// Obtem o valor de uma opção obtida durante o parse.
+	const std::string& GetOption(const std::string& option) const;
+
+	// Obtem o valor de uma opção convertida para float.
+	float GetOptionAsFloat(const std::string& option) const;
+
+	// Obtem o valor de uma opção convertida para int.
+	int GetOptionAsInt(const std::string& option) const;
 };
