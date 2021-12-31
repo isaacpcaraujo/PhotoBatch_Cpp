@@ -65,6 +65,18 @@ float ArgumentParser::GetOptionAsFloat(const std::string& option) const
 	return -1;
 }
 
+int ArgumentParser::GetOptionAsInt(const std::string& option) const
+{
+	const std::string& optionValue = GetOption(option);
+
+	if (!optionValue.empty())
+	{
+		return std::stoi(optionValue);
+	}
+
+	return -1;
+}
+
 void ArgumentParser::Parse(int argc, char* argv[])
 {
 	if (argc > 1)
