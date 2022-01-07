@@ -19,7 +19,7 @@ void ArgumentParser::RegisterOption(const std::string& option)
 	}
 }
 
-bool ArgumentParser::GetFlag(const std::string& flag)
+bool ArgumentParser::GetFlag(const std::string& flag) const
 {
 	if (!flag.empty())
 	{

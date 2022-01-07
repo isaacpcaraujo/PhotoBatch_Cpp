@@ -1,7 +1,42 @@
 #include <iostream>
 #include <iomanip>
+#include <array>
 
 #include "ArgumentParser.h"
+
+namespace Args
+{
+	namespace Flags
+	{
+		static constexpr const char* Rename = "rename";
+		static constexpr const char* Convert = "convert";
+		static constexpr const char* Resize = "resize";
+		static constexpr const char* Scale = "scale";
+	}
+}
+
+void ValidateArguments(const ArgumentParser& argParser)
+{
+	// Ter as flags que o ArgumentParser identificou
+
+	const bool bRenameMode = argParser.GetFlag(Args::Flags::Rename);
+	const bool bConvertMode = argParser.GetFlag(Args::Flags::Convert);
+	const bool bResizeMode = argParser.GetFlag(Args::Flags::Resize);
+	const bool bScaleMode = argParser.GetFlag(Args::Flags::Scale);
+
+	// Cria um array com os modos: std::array e std::count.
+	const std::array<bool, 4> modes = { bRenameMode , bConvertMode, bResizeMode, bScaleMode };
+	const std::ptrdiff_t numActiveModes = std::count(std::begin(modes), std::end(modes), true);
+
+	// Verifica se somente um modo do PhotoBatch foi selecionado.
+
+	if (numActiveModes!=1)
+	{
+		// Se houver mais de um modo ativo, lança uma exceção.
+		throw std::invalid_argument("Somente um modo pode estar ativo!");
+	}
+
+}
 
 int main(int argc, char* argv[])
 {
@@ -9,23 +44,21 @@ int main(int argc, char* argv[])
 	setlocale(LC_NUMERIC, "en_US");
 
 	ArgumentParser argParser;
-	argParser.RegisterFlag("rename");
-	argParser.RegisterFlag("convert");
-	argParser.RegisterFlag("resize");
-	argParser.RegisterFlag("scale");
-	argParser.RegisterOption("folder");
-	argParser.RegisterOption("amount");
+	argParser.RegisterFlag(Args::Flags::Rename);
+	argParser.RegisterFlag(Args::Flags::Convert);
+	argParser.RegisterFlag(Args::Flags::Resize);
+	argParser.RegisterFlag(Args::Flags::Scale);
 
 	argParser.Parse(argc, argv);
 
-	std::cout << std::boolalpha << "Rename: " << argParser.GetFlag("rename") << std::endl;
-	std::cout << std::boolalpha << "Convert: " << argParser.GetFlag("convert") << std::endl;
-	std::cout << std::boolalpha << "Resize: " << argParser.GetFlag("resize") << std::endl;
-	std::cout << std::boolalpha << "Scale: " << argParser.GetFlag("scale") << std::endl;
-	std::cout << std::boolalpha << "Folder: " << argParser.GetOptionAs<const std::string&>("folder") << std::endl;
-	std::cout << std::boolalpha << "Amount: " << argParser.GetOptionAs<const std::string&>("amount") << std::endl;
-	std::cout << "Amount(Float): " << argParser.GetOptionAs<float>("amount") << std::endl;
-	std::cout << "Amount(Int): " << argParser.GetOptionAs<int>("amount") << std::endl;
+	try
+	{
+		ValidateArguments(argParser);
+	}
+	catch (const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
 
 	return 0;
 }

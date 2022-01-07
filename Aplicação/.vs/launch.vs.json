@@ -10,9 +10,7 @@
       "args": [
         "--Rename",
         "--resizE",
-        "--scale",
-        "--Folder=C:/Users/isaacpcaraujo/Desktop/Imagens",
-        "--Amount=0.5"
+        "--scale"
       ]
     }
   ]
