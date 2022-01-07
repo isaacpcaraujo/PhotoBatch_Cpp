@@ -21,7 +21,7 @@ public:
 	void RegisterOption(const std::string& option);
 
 	// Obtem o valor de uma flag obtida durante o parse.
-	bool GetFlag(const std::string& flag);
+	bool GetFlag(const std::string& flag) const;
 
 	// Template para generalizar a conversão de uma opção
 	template<typename T>
