@@ -56,21 +56,21 @@ build rebuild_cache: phony CMakeFiles\rebuild_cache.util
 build cmake_object_order_depends_target_PhotoBatch: phony || CMakeFiles\PhotoBatch.dir
 
 build CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\PhotoBatch.cpp || cmake_object_order_depends_target_PhotoBatch
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   OBJECT_DIR = CMakeFiles\PhotoBatch.dir
   OBJECT_FILE_DIR = CMakeFiles\PhotoBatch.dir
   TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
   TARGET_PDB = PhotoBatch.pdb
 
 build CMakeFiles\PhotoBatch.dir\ArgumentParser.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\ArgumentParser.cpp || cmake_object_order_depends_target_PhotoBatch
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   OBJECT_DIR = CMakeFiles\PhotoBatch.dir
   OBJECT_FILE_DIR = CMakeFiles\PhotoBatch.dir
   TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
   TARGET_PDB = PhotoBatch.pdb
 
 build CMakeFiles\PhotoBatch.dir\Utils.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\Utils.cpp || cmake_object_order_depends_target_PhotoBatch
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   OBJECT_DIR = CMakeFiles\PhotoBatch.dir
   OBJECT_FILE_DIR = CMakeFiles\PhotoBatch.dir
   TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
