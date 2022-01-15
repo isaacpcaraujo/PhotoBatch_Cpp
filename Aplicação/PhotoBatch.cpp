@@ -21,8 +21,23 @@ namespace Args
 		static constexpr const char* Filter = "filter";
 		static constexpr const char* Width = "width";
 		static constexpr const char* Height = "height";
+		static constexpr const char* Amount = "amount";
+		static constexpr const char* Prefix = "prefix";
+		static constexpr const char* StartNumber = "startnumber";
 	}
 
+}
+
+const std::string& GetInvalidCharacters()
+{
+	static const std::string invalidCharacters = "\\/*?\"<>|:";
+	return invalidCharacters;
+}
+
+bool HasInvalidChars(const std::string& str)
+{
+	const bool bHasInvalidChars = str.find_first_of(GetInvalidCharacters()) != std::string::npos;
+	return bHasInvalidChars;
 }
 
 void ValidateArguments(const ArgumentParser& argParser)
@@ -65,15 +80,88 @@ void ValidateArguments(const ArgumentParser& argParser)
 	}
 
 	// Verifica se a string da pasta de arquivos está vazia.
-	if (!filter.empty())
+	if (!filter.empty() && HasInvalidChars(filter))
 	{
-		const std::string invalidCharacters = "\\/*?\"<>|:";
-		if (filter.find_first_of(invalidCharacters) != std::string::npos)
+		throw std::invalid_argument("O filtro não pode conter " + GetInvalidCharacters());
+	}
+
+	// Valida o modo Resize
+	if (bResizeMode)
+	{
+		int width = 0;
+		int height = 0;
+
+		try
 		{
-			throw std::invalid_argument("O filtro não pode conter " + invalidCharacters);
+			width = argParser.GetOptionAs<int>(Args::Opts::Width);
+			height = argParser.GetOptionAs<int>(Args::Opts::Height);
+		}
+		catch (const std::invalid_argument& exception)
+		{
+			throw std::invalid_argument("O valor informado para Width ou Height não são números válidos!");
+		}
+
+		if (width <= 0 || height <= 0)
+		{
+			throw std::invalid_argument("Width e Height devem ser maiores que 0!");
+		}
+
+		if (filter.empty())
+		{
+			throw std::invalid_argument("O filter não pode estar vazio no modo Resize!");
+		}
+
+	}
+
+	// Valida o modo Scale.
+	if (bScaleMode)
+	{
+		float amount = 0.0f;
+
+		try
+		{
+			amount = argParser.GetOptionAs<float>(Args::Opts::Amount);
+		}
+		catch (const std::invalid_argument& exception)
+		{
+			throw std::invalid_argument("O valor informado para Amount não é um número válido!");
+		}
+
+		if (amount <= 0.0f)
+		{
+			throw std::invalid_argument("O Amount deve ser maior que 0!");
+		}
+
+		if (filter.empty())
+		{
+			throw std::invalid_argument("O filter não pode estar vazio no modo Scale!");
 		}
 	}
 	
+	if (bRenameMode)
+	{
+		int startNumber = -1;
+		const std::string prefix = argParser.GetOptionAs<const std::string&>(Args::Opts::Prefix);
+
+		try
+		{
+			startNumber = argParser.GetOptionAs<int>(Args::Opts::StartNumber);
+		}
+		catch (const std::invalid_argument& exception)
+		{
+			throw std::invalid_argument("O valor informado para StartNumber não é um número válido!");
+		}
+
+		if (startNumber < 0)
+		{
+			throw std::invalid_argument("O StartNumber deve ser maior ou igual a 0!");
+		}
+
+		if (filter.empty() || HasInvalidChars(prefix))
+		{
+			throw std::invalid_argument("O prefix não pode estar vazio, nem conter " + GetInvalidCharacters());
+		}
+	}
 }
 
 int main(int argc, char* argv[])
@@ -81,15 +169,23 @@ int main(int argc, char* argv[])
 	setlocale(LC_ALL, "pt_BR");
 	setlocale(LC_NUMERIC, "en_US");
 
+	// Instanciando a Classe ArgumentParser
 	ArgumentParser argParser;
+
+	// Registra as Flags do PhotoBatch
 	argParser.RegisterFlag(Args::Flags::Rename);
 	argParser.RegisterFlag(Args::Flags::Convert);
 	argParser.RegisterFlag(Args::Flags::Resize);
 	argParser.RegisterFlag(Args::Flags::Scale);
+
+	// Registra as Opções do PhotoBatch
 	argParser.RegisterOption(Args::Opts::Folder);
 	argParser.RegisterOption(Args::Opts::Filter);
 	argParser.RegisterOption(Args::Opts::Width);
 	argParser.RegisterOption(Args::Opts::Height);
+	argParser.RegisterOption(Args::Opts::Amount);
+	argParser.RegisterOption(Args::Opts::Prefix);
+	argParser.RegisterOption(Args::Opts::StartNumber);
 
 	argParser.Parse(argc, argv);
 
