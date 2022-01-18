@@ -8,10 +8,11 @@
       "projectTarget": "PhotoBatch.exe",
       "name": "PhotoBatch.exe",
       "args": [
-        "--rename",
+        "--convert",
         "--folder=C:/PhotoBatch/imagens",
-        "--filter=.png",
-        "--prefix=Viagem_",
+        "--filter=",
+        "--from=png",
+        "--to=jpg",
         "--startnumber=2"
       ]
     }

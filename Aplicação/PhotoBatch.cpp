@@ -24,6 +24,8 @@ namespace Args
 		static constexpr const char* Amount = "amount";
 		static constexpr const char* Prefix = "prefix";
 		static constexpr const char* StartNumber = "startnumber";
+		static constexpr const char* From = "from";
+		static constexpr const char* To = "to";
 	}
 
 }
@@ -162,6 +164,23 @@ void ValidateArguments(const ArgumentParser& argParser)
 			throw std::invalid_argument("O prefix não pode estar vazio, nem conter " + GetInvalidCharacters());
 		}
 	}
+
+	// Validar o modo Convert
+	if (bConvertMode)
+	{
+		const std::string from = argParser.GetOptionAs<const std::string&>(Args::Opts::From);
+		const std::string to = argParser.GetOptionAs<const std::string&>(Args::Opts::To);
+		const std::array<std::string, 2> convertOptions = { "png", "jpg" };
+
+		const bool bIsFromValid = std::find(std::begin(convertOptions), std::end(convertOptions), from) != std::end(convertOptions);
+		const bool bIsToValid = std::find(std::begin(convertOptions), std::end(convertOptions), to) != std::end(convertOptions);
+
+		if (!bIsFromValid || !bIsToValid)
+		{
+			throw std::invalid_argument("From e To devem ser diferentes");
+		}
+	}
+
 }
 
 int main(int argc, char* argv[])
@@ -186,6 +205,8 @@ int main(int argc, char* argv[])
 	argParser.RegisterOption(Args::Opts::Amount);
 	argParser.RegisterOption(Args::Opts::Prefix);
 	argParser.RegisterOption(Args::Opts::StartNumber);
+	argParser.RegisterOption(Args::Opts::From);
+	argParser.RegisterOption(Args::Opts::To);
 
 	argParser.Parse(argc, argv);
 
