@@ -36,14 +36,19 @@ public:
 	template<>
 	int GetOptionAs(const std::string& option) const { return GetOptionAsInt(option); }
 
+	// Obtem o valor da mensagem help utilizada.
+	void SetHelpMessage(const std::string& helpMessage);
+
+	const std::string& GetHelpMessage() const;
+
 	// Faz o parse da lista de argumentos em argv.
 	void Parse(int argc, char* argv[]);
-
 	
 private:
-	// Declarando Dicionários para nossas Flags e Options.
+	// Declarando Dicionários e strings para nossas Flags e Options.
 	std::map<std::string, bool> m_Flags;
 	std::map<std::string, std::string> m_Options;
+	std::string m_HelpMessage;
 
 	// Obtem o valor de uma opção obtida durante o parse.
 	const std::string& GetOption(const std::string& option) const;
