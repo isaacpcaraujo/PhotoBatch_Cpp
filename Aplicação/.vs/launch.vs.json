@@ -8,7 +8,7 @@
       "projectTarget": "PhotoBatch.exe",
       "name": "PhotoBatch.exe",
       "args": [
-        "--convert",
+        "--HELP",
         "--folder=C:/PhotoBatch/imagens",
         "--filter=",
         "--from=png",

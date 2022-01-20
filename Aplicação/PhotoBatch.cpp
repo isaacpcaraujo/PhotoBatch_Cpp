@@ -13,6 +13,7 @@ namespace Args
 		static constexpr const char* Convert = "convert";
 		static constexpr const char* Resize = "resize";
 		static constexpr const char* Scale = "scale";
+		static constexpr const char* Help = "help";
 	}
 
 	namespace Opts
@@ -50,10 +51,11 @@ void ValidateArguments(const ArgumentParser& argParser)
 	const bool bConvertMode = argParser.GetFlag(Args::Flags::Convert);
 	const bool bResizeMode = argParser.GetFlag(Args::Flags::Resize);
 	const bool bScaleMode = argParser.GetFlag(Args::Flags::Scale);
+	const bool bHelpMode = argParser.GetFlag(Args::Flags::Help);
 
 	
 	// Cria um array com os modos: std::array e std::count.
-	const std::array<bool, 4> modes = { bRenameMode , bConvertMode, bResizeMode, bScaleMode };
+	const std::array<bool, 5> modes = { bRenameMode , bConvertMode, bResizeMode, bScaleMode, bHelpMode };
 	const std::ptrdiff_t numActiveModes = std::count(std::begin(modes), std::end(modes), true);
 
 	// Verifica se somente um modo do PhotoBatch foi selecionado.
@@ -64,120 +66,127 @@ void ValidateArguments(const ArgumentParser& argParser)
 		throw std::invalid_argument("Somente um modo pode estar ativo!");
 	}
 
-	
-	// Obtem as opções a serem validadas 
-	const std::string folder = argParser.GetOptionAs<const std::string&>(Args::Opts::Folder);
-	const std::string filter = argParser.GetOptionAs<const std::string&>(Args::Opts::Filter);
-	
-	// Verifica se a string da pasta de arquivos está vazia.
-	if (folder.empty())
+	// Valida o modo Help
+	if (bHelpMode)
 	{
-		throw std::invalid_argument("É necessário uma pasta de arquivos!");
+		std::cout << argParser.GetHelpMessage();
 	}
-
-	// Verifica se a pasta de arquivos existe.
-	if (!std::filesystem::exists(folder))
+	else
 	{
-		throw std::invalid_argument("A pasta de arquivos não existe!");
-	}
+		// Obtem as opções a serem validadas 
+		const std::string folder = argParser.GetOptionAs<const std::string&>(Args::Opts::Folder);
+		const std::string filter = argParser.GetOptionAs<const std::string&>(Args::Opts::Filter);
 
-	// Verifica se a string da pasta de arquivos está vazia.
-	if (!filter.empty() && HasInvalidChars(filter))
-	{
-		throw std::invalid_argument("O filtro não pode conter " + GetInvalidCharacters());
-	}
-
-	// Valida o modo Resize
-	if (bResizeMode)
-	{
-		int width = 0;
-		int height = 0;
-
-		try
+		// Verifica se a string da pasta de arquivos está vazia.
+		if (folder.empty())
 		{
-			width = argParser.GetOptionAs<int>(Args::Opts::Width);
-			height = argParser.GetOptionAs<int>(Args::Opts::Height);
-		}
-		catch (const std::invalid_argument& exception)
-		{
-			throw std::invalid_argument("O valor informado para Width ou Height não são números válidos!");
+			throw std::invalid_argument("É necessário uma pasta de arquivos!");
 		}
 
-		if (width <= 0 || height <= 0)
+		// Verifica se a pasta de arquivos existe.
+		if (!std::filesystem::exists(folder))
 		{
-			throw std::invalid_argument("Width e Height devem ser maiores que 0!");
+			throw std::invalid_argument("A pasta de arquivos não existe!");
 		}
 
-		if (filter.empty())
+		// Verifica se a string da pasta de arquivos está vazia.
+		if (!filter.empty() && HasInvalidChars(filter))
 		{
-			throw std::invalid_argument("O filter não pode estar vazio no modo Resize!");
+			throw std::invalid_argument("O filtro não pode conter " + GetInvalidCharacters());
 		}
 
-	}
+		// Valida o modo Resize
+		if (bResizeMode)
+		{
+			int width = 0;
+			int height = 0;
 
-	// Valida o modo Scale.
-	if (bScaleMode)
-	{
-		float amount = 0.0f;
+			try
+			{
+				width = argParser.GetOptionAs<int>(Args::Opts::Width);
+				height = argParser.GetOptionAs<int>(Args::Opts::Height);
+			}
+			catch (const std::invalid_argument& exception)
+			{
+				throw std::invalid_argument("O valor informado para Width ou Height não são números válidos!");
+			}
 
-		try
-		{
-			amount = argParser.GetOptionAs<float>(Args::Opts::Amount);
-		}
-		catch (const std::invalid_argument& exception)
-		{
-			throw std::invalid_argument("O valor informado para Amount não é um número válido!");
-		}
+			if (width <= 0 || height <= 0)
+			{
+				throw std::invalid_argument("Width e Height devem ser maiores que 0!");
+			}
 
-		if (amount <= 0.0f)
-		{
-			throw std::invalid_argument("O Amount deve ser maior que 0!");
-		}
+			if (filter.empty())
+			{
+				throw std::invalid_argument("O filter não pode estar vazio no modo Resize!");
+			}
 
-		if (filter.empty())
-		{
-			throw std::invalid_argument("O filter não pode estar vazio no modo Scale!");
-		}
-	}
-	
-	if (bRenameMode)
-	{
-		int startNumber = -1;
-		const std::string prefix = argParser.GetOptionAs<const std::string&>(Args::Opts::Prefix);
-
-		try
-		{
-			startNumber = argParser.GetOptionAs<int>(Args::Opts::StartNumber);
-		}
-		catch (const std::invalid_argument& exception)
-		{
-			throw std::invalid_argument("O valor informado para StartNumber não é um número válido!");
 		}
 
-		if (startNumber < 0)
+		// Valida o modo Scale.
+		if (bScaleMode)
 		{
-			throw std::invalid_argument("O StartNumber deve ser maior ou igual a 0!");
+			float amount = 0.0f;
+
+			try
+			{
+				amount = argParser.GetOptionAs<float>(Args::Opts::Amount);
+			}
+			catch (const std::invalid_argument& exception)
+			{
+				throw std::invalid_argument("O valor informado para Amount não é um número válido!");
+			}
+
+			if (amount <= 0.0f)
+			{
+				throw std::invalid_argument("O Amount deve ser maior que 0!");
+			}
+
+			if (filter.empty())
+			{
+				throw std::invalid_argument("O filter não pode estar vazio no modo Scale!");
+			}
 		}
 
-		if (filter.empty() || HasInvalidChars(prefix))
+		if (bRenameMode)
 		{
-			throw std::invalid_argument("O prefix não pode estar vazio, nem conter " + GetInvalidCharacters());
+			int startNumber = -1;
+			const std::string prefix = argParser.GetOptionAs<const std::string&>(Args::Opts::Prefix);
+
+			try
+			{
+				startNumber = argParser.GetOptionAs<int>(Args::Opts::StartNumber);
+			}
+			catch (const std::invalid_argument& exception)
+			{
+				throw std::invalid_argument("O valor informado para StartNumber não é um número válido!");
+			}
+
+			if (startNumber < 0)
+			{
+				throw std::invalid_argument("O StartNumber deve ser maior ou igual a 0!");
+			}
+
+			if (filter.empty() || HasInvalidChars(prefix))
+			{
+				throw std::invalid_argument("O prefix não pode estar vazio, nem conter " + GetInvalidCharacters());
+			}
 		}
-	}
 
-	// Validar o modo Convert
-	if (bConvertMode)
-	{
-		const std::string from = argParser.GetOptionAs<const std::string&>(Args::Opts::From);
-		const std::string to = argParser.GetOptionAs<const std::string&>(Args::Opts::To);
-		const std::array<std::string, 2> convertOptions = { "png", "jpg" };
-
-		const bool bIsFromValid = std::find(std::begin(convertOptions), std::end(convertOptions), from) != std::end(convertOptions);
-		const bool bIsToValid = std::find(std::begin(convertOptions), std::end(convertOptions), to) != std::end(convertOptions);
-
-		if (!bIsFromValid || !bIsToValid)
+		// Validar o modo Convert
+		if (bConvertMode)
 		{
-			throw std::invalid_argument("From e To devem ser diferentes");
+			const std::string from = argParser.GetOptionAs<const std::string&>(Args::Opts::From);
+			const std::string to = argParser.GetOptionAs<const std::string&>(Args::Opts::To);
+			const std::array<std::string, 2> convertOptions = { "png", "jpg" };
+
+			const bool bIsFromValid = std::find(std::begin(convertOptions), std::end(convertOptions), from) != std::end(convertOptions);
+			const bool bIsToValid = std::find(std::begin(convertOptions), std::end(convertOptions), to) != std::end(convertOptions);
+
+			if (!bIsFromValid || !bIsToValid)
+			{
+				throw std::invalid_argument("From e To devem ser diferentes");
+			}
 		}
 	}
 
@@ -196,6 +205,7 @@ int main(int argc, char* argv[])
 	argParser.RegisterFlag(Args::Flags::Convert);
 	argParser.RegisterFlag(Args::Flags::Resize);
 	argParser.RegisterFlag(Args::Flags::Scale);
+	argParser.RegisterFlag(Args::Flags::Help);
 
 	// Registra as Opções do PhotoBatch
 	argParser.RegisterOption(Args::Opts::Folder);
@@ -210,13 +220,48 @@ int main(int argc, char* argv[])
 
 	argParser.Parse(argc, argv);
 
+	// Inicializando a mensagem do modo Help
+	argParser.SetHelpMessage(R"(  PhotoBatch - COMANDOS
+
+		--help : Modo ajuda.
+			
+	FLAGS
+		--rename : Ativa o modo de renomear os arquivos.
+		--convert : Ativa o modo de converter o tipo dos arquivos.
+		--resize : Ativa o modo de redimensionar os tamanhos da imagem.
+		--scale : Ativa o modo de escalar as imagens.
+
+	OPTIONS
+		--folder=<string> : Caminho para pasta de arquivos.
+		--filter=<string> : Especifica o tipo/nome do arquivo a ser modificado.
+
+		[RESIZE]
+		--width=<int> : Altura da imagem.
+		--height=<int> : Largura da imagem.
+
+		[SCALE]
+		--amount=<float> : Multiplicador de redimensionamento.
+
+		[RENAME]
+		--prefix=<string> : Prefixo utilizado na renomeação dos arquivos.
+		--startnumber=<int> : Especifica o numero inicial para modificar os arquivos.
+
+		[CONVERT]
+		--from=<string> : Tipo das imagens utilizadas para conversão.
+		--to=<string> : Tipo querido para as imagens que deseja converter.
+
+
+	Obs: Todos os comandos são case sensitive. Ou seja, é possível utilizá-las com letras maiúsculas e minúsculas.
+	)");
+
 	try
 	{
 		ValidateArguments(argParser);
 	}
 	catch (const std::exception& exception)
 	{
-		std::cerr << exception.what() << std::endl;
+		std::cerr << exception.what();
+		std::cout << " Para mais informações, acesse o modo help. [.\\PhotoBatch.exe --help]" << std::endl;
 	}
 
 	return 0;
