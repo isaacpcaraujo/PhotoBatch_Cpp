@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\out\\build",
+    "\\out\\build\\x64-Debug",
+    "\\out\\build\\x64-Debug\\_deps",
+    "\\UnitTests"
   ],
-  "SelectedNode": "\\Utils.h",
+  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }

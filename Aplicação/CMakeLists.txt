@@ -8,7 +8,7 @@ add_executable(PhotoBatch
 				"ArgumentParser.cpp"
 				"Utils.h" 
 				"Utils.cpp"
-)
+ "UnitTests/TestArgumentParser.cpp")
 
 set_target_properties(PhotoBatch PROPERTIES CXX_STANDARD 17)
 
