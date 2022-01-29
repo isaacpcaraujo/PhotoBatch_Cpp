@@ -217,9 +217,8 @@ int main(int argc, char* argv[])
 	argParser.RegisterOption(Args::Opts::StartNumber);
 	argParser.RegisterOption(Args::Opts::From);
 	argParser.RegisterOption(Args::Opts::To);
-
-	argParser.Parse(argc, argv);
-
+	
+	
 	// Inicializando a mensagem do modo Help
 	argParser.SetHelpMessage(R"(  PhotoBatch - COMANDOS
 
@@ -253,6 +252,9 @@ int main(int argc, char* argv[])
 
 	Obs: Todos os comandos são case sensitive. Ou seja, é possível utilizá-las com letras maiúsculas e minúsculas.
 	)");
+
+	argParser.Parse(argc, argv);
+
 
 	try
 	{
