@@ -20,6 +20,12 @@ public:
 	// Registra uma Opção usada durante o parse.
 	void RegisterOption(const std::string& option);
 
+	// Retorna se a Flag foi registrada
+	bool IsFlagRegistered(const std::string& flag) const;
+
+	// Retorna se a Flag foi registrada
+	bool IsOptionRegistered(const std::string& option) const;
+
 	// Obtem o valor de uma flag obtida durante o parse.
 	bool GetFlag(const std::string& flag) const;
 

@@ -76,7 +76,7 @@ build CMakeFiles\PhotoBatch.dir\Utils.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..
   TARGET_COMPILE_PDB = CMakeFiles\PhotoBatch.dir\
   TARGET_PDB = PhotoBatch.pdb
 
-build CMakeFiles\PhotoBatch.dir\UnitTests\TestArgumentParser.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\UnitTests\TestArgumentParser.cpp || cmake_object_order_depends_target_PhotoBatch
+build CMakeFiles\PhotoBatch.dir\UnitTests\TestSum.cpp.obj: CXX_COMPILER__PhotoBatch_Debug ..\..\..\UnitTests\TestSum.cpp || cmake_object_order_depends_target_PhotoBatch
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   OBJECT_DIR = CMakeFiles\PhotoBatch.dir
   OBJECT_FILE_DIR = CMakeFiles\PhotoBatch.dir\UnitTests
@@ -91,7 +91,7 @@ build CMakeFiles\PhotoBatch.dir\UnitTests\TestArgumentParser.cpp.obj: CXX_COMPIL
 #############################################
 # Link the executable PhotoBatch.exe
 
-build PhotoBatch.exe: CXX_EXECUTABLE_LINKER__PhotoBatch_Debug CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj CMakeFiles\PhotoBatch.dir\ArgumentParser.cpp.obj CMakeFiles\PhotoBatch.dir\Utils.cpp.obj CMakeFiles\PhotoBatch.dir\UnitTests\TestArgumentParser.cpp.obj
+build PhotoBatch.exe: CXX_EXECUTABLE_LINKER__PhotoBatch_Debug CMakeFiles\PhotoBatch.dir\PhotoBatch.cpp.obj CMakeFiles\PhotoBatch.dir\ArgumentParser.cpp.obj CMakeFiles\PhotoBatch.dir\Utils.cpp.obj CMakeFiles\PhotoBatch.dir\UnitTests\TestSum.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
@@ -160,9 +160,25 @@ build cmake_object_order_depends_target_TestArgumentParser: phony || cmake_objec
 
 build UnitTests\CMakeFiles\TestArgumentParser.dir\TestArgumentParser.cpp.obj: CXX_COMPILER__TestArgumentParser_Debug ..\..\..\UnitTests\TestArgumentParser.cpp || cmake_object_order_depends_target_TestArgumentParser
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
-  INCLUDES = -I_deps\googletest-src\googletest\include -I_deps\googletest-src\googletest
+  INCLUDES = -I..\..\..\ -I_deps\googletest-src\googletest\include -I_deps\googletest-src\googletest
   OBJECT_DIR = UnitTests\CMakeFiles\TestArgumentParser.dir
   OBJECT_FILE_DIR = UnitTests\CMakeFiles\TestArgumentParser.dir
+  TARGET_COMPILE_PDB = UnitTests\CMakeFiles\TestArgumentParser.dir\
+  TARGET_PDB = UnitTests\TestArgumentParser.pdb
+
+build UnitTests\CMakeFiles\TestArgumentParser.dir\__\ArgumentParser.cpp.obj: CXX_COMPILER__TestArgumentParser_Debug ..\..\..\ArgumentParser.cpp || cmake_object_order_depends_target_TestArgumentParser
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  INCLUDES = -I..\..\..\ -I_deps\googletest-src\googletest\include -I_deps\googletest-src\googletest
+  OBJECT_DIR = UnitTests\CMakeFiles\TestArgumentParser.dir
+  OBJECT_FILE_DIR = UnitTests\CMakeFiles\TestArgumentParser.dir\__
+  TARGET_COMPILE_PDB = UnitTests\CMakeFiles\TestArgumentParser.dir\
+  TARGET_PDB = UnitTests\TestArgumentParser.pdb
+
+build UnitTests\CMakeFiles\TestArgumentParser.dir\__\Utils.cpp.obj: CXX_COMPILER__TestArgumentParser_Debug ..\..\..\Utils.cpp || cmake_object_order_depends_target_TestArgumentParser
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  INCLUDES = -I..\..\..\ -I_deps\googletest-src\googletest\include -I_deps\googletest-src\googletest
+  OBJECT_DIR = UnitTests\CMakeFiles\TestArgumentParser.dir
+  OBJECT_FILE_DIR = UnitTests\CMakeFiles\TestArgumentParser.dir\__
   TARGET_COMPILE_PDB = UnitTests\CMakeFiles\TestArgumentParser.dir\
   TARGET_PDB = UnitTests\TestArgumentParser.pdb
 
@@ -174,7 +190,7 @@ build UnitTests\CMakeFiles\TestArgumentParser.dir\TestArgumentParser.cpp.obj: CX
 #############################################
 # Link the executable UnitTests\TestArgumentParser.exe
 
-build UnitTests\TestArgumentParser.exe: CXX_EXECUTABLE_LINKER__TestArgumentParser_Debug UnitTests\CMakeFiles\TestArgumentParser.dir\TestArgumentParser.cpp.obj | lib\gtest_maind.lib lib\gtestd.lib || lib\gtest_maind.lib lib\gtestd.lib
+build UnitTests\TestArgumentParser.exe: CXX_EXECUTABLE_LINKER__TestArgumentParser_Debug UnitTests\CMakeFiles\TestArgumentParser.dir\TestArgumentParser.cpp.obj UnitTests\CMakeFiles\TestArgumentParser.dir\__\ArgumentParser.cpp.obj UnitTests\CMakeFiles\TestArgumentParser.dir\__\Utils.cpp.obj | lib\gtest_maind.lib lib\gtestd.lib || lib\gtest_maind.lib lib\gtestd.lib
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = lib\gtest_maind.lib  lib\gtestd.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

@@ -19,6 +19,30 @@ void ArgumentParser::RegisterOption(const std::string& option)
 	}
 }
 
+// Retorna se a Flag foi registrada
+bool ArgumentParser::IsFlagRegistered(const std::string& flag) const
+{
+	if (!flag.empty())
+	{
+		return m_Flags.count(flag) == 1;
+	}
+
+	return false;
+}
+
+
+// Retorna se a Opção foi registrada
+bool ArgumentParser::IsOptionRegistered(const std::string& option) const
+{
+	if (!option.empty())
+	{
+		return m_Options.count(option) == 1;
+	}
+
+	return false;
+}
+
+
 bool ArgumentParser::GetFlag(const std::string& flag) const
 {
 	if (!flag.empty())
@@ -89,7 +113,7 @@ const std::string& ArgumentParser::GetHelpMessage() const
 
 void ArgumentParser::Parse(int argc, char* argv[])
 {
-	if (argc > 1)
+	if (argc > 1 && argv != nullptr)
 	{
 		for (int i = 1; i < argc; ++i)
 		{
